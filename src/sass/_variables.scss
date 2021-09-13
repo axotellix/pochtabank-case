@@ -1,18 +1,19 @@
 
 // [ COLOURS ]:
 
-$yellow:    #F5DC54;
-$white:     #FCF4DF;
-$grey:      #A39D8D;
-$dark:      #090B0E;
-$black:     #030405;
+$white:     #FFFFFF;
+$l-grey:    #EDEDF2;
+$grey:      #8B929A;
+$dark:      #1A222C;
+$green:     #4BE275;
+$yellow:    #FFBC3B;
+$red:       #E24B4B;
 
 
 // [ FONTS ]:
 
 $f-size: 10px;
-$f-body:    'Syne', sans-serif;
-$f-decor:   'Suissnord', sans-serif;
+$f-body:    'Roboto', sans-serif;
 $font: $f-size $f-body;
 $f-lite:        300;
 $f-normal:      400;
@@ -36,10 +37,10 @@ $w: $lg;
 
 :root {
 
-    --m-tiny:   20px;
-    --m-small:  50px;
-    --m-medium: 70px;
-    --m-big:    100px;
-    --m-large:  125px;
+    --m-tiny:   25px;
+    --m-small:  30px;
+    --m-medium: 40px;
+    --m-big:    50px;
+    --m-large:  80px;
 
 }
