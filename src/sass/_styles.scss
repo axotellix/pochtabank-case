@@ -2,20 +2,24 @@
 // [ GENERAL ]
 html { font: $font; font-weight: $f-normal; }
 body {
-    background: $black;
-    color: $white;
+    background: $white;
+    color: $dark;
     font-smooth: antialiased;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
 }
 
 a { 
     color: $white;
 }
 
-svg.bg-img {
-    fill: $white !important;
-    opacity: 0.05;
-    z-index: -1;
-    user-select: none;
-    pointer-events: none;
+
+// [ MAIN ]
+main {
+    width: 100%; height: auto; min-height: 100vh;
+    padding: var(--m-medium) var(--m-large);
+    gap: var(--m-big);
+    flex-wrap: wrap;
+
+    @include flex-align(center, stretch);
 }

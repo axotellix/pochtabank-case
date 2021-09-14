@@ -1,14 +1,23 @@
 
 <!-- [ SCRIPT ] -->
 <script>
-	// [ IMPORTS ]
-	export let name;
-
+	// [ IMPORTS: components ]
+	import Chat from "./partials/Chat.svelte";
+	import Dashboard from "./partials/Dashboard.svelte";
+	
+	// [ IMPORTS: props ]
+	
 
 </script>
 
 
-<!-- [ TEMPLATE ] -->
+<!-- [ TEMPLATE: Root ] -->
 <main>
+
+	<!-- [ section: chat ] -->
+	<Chat />
 	
+	<!-- [ section: dashboard ] -->
+	<Dashboard />
+
 </main>
