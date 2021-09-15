@@ -13,5 +13,5 @@
 
 <!-- [ TEMPLATE: Dashboard > Root ] -->
 <div class = 'dashboard'>
-	<Header />
+	<Header title="Анализ сообщения" />
 </div>

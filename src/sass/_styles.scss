@@ -2,7 +2,7 @@
 // [ GENERAL ]
 html { font: $font; font-weight: $f-normal; }
 body {
-    background: $white;
+    background: lighten($l-grey, 4%);
     color: $dark;
     font-smooth: antialiased;
     -webkit-font-smoothing: antialiased;
@@ -22,4 +22,8 @@ main {
     flex-wrap: wrap;
 
     @include flex-align(center, stretch);
+}
+
+svg.ico {
+    width: 22px; height: 22px; 
 }
