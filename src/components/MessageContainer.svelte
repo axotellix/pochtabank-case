@@ -27,6 +27,7 @@
 <!-- [ TEMPLATE: MessageContainer > Chat ] -->
 <div class = 'section-messages'>
 
+
 	<Message />
 
 </div>

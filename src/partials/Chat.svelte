@@ -30,7 +30,7 @@
 	<Header title="Введите сообщение" />
 
 	<!-- [ messages ] -->
-	<MessageContainer />
+	<MessageContainer /> 
 
 	<!-- [ toolbar: send message ] -->
 	<Toolbar>

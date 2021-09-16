@@ -17,5 +17,5 @@ const MessageStore = writable([
 	}
 ]);
 
-export default MessageStore;
 
+export default MessageStore;
