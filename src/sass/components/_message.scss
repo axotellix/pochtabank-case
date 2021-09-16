@@ -2,12 +2,12 @@
 // [ MESSAGE ]
 .message {
     width: 400px; height: auto;
+    flex-shrink: 0;
     margin-top: var(--m-tiny) 0;
     background: $l-grey;
     border-radius: 5px;
-    overflow: hidden;
     cursor: pointer;
-    transition: opacity 0.25s;
+    transition: all 0.25s;
     @include flex-align(def, def, column);
 
     & + & { margin-top: var(--m-tiny) }
@@ -19,6 +19,32 @@
         opacity: 1;
     }
 
+}
+.message.active {
+    position: relative;
+    margin-top: 50px;
+    width: 450px; padding: 15px 0;
+    background: $dark;
+    z-index: 90;
+
+    &::before {
+        content: "Выбрано:";
+        display: block;
+        color: $dark;
+        font-size: 1.5rem; 
+        font-weight: $f-bold;
+        z-index: 90;
+        @include align(center, top, absolute, 0, -30px);
+    }
+
+    .message-text, .metadata .date { 
+        color: $l-grey;
+        font-size: 1.6rem;
+    }
+
+    .metadata .indicator {
+        background: rgba($white, 0.2);
+    }
 }
 
 // [ message text ]

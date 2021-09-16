@@ -15,9 +15,72 @@
 
 
 	// [ PROPS ]
+	let is_analysing = false;
+	let msg_txt  = '';
 
 
-	// [ STORES ]
+	// [ METHODS ]
+	//@ get > message entered in Input
+	const getMessage = ( e ) => {
+		msg_txt = e.detail;
+	} 
+	//@ analyse > message
+	const analyseMessage = () => {
+		
+		if( !is_analysing ) {
+
+			// start > analysing message
+			is_analysing = true;
+
+			// create > new message
+			let msg = {
+				id: ($MessageStore[$MessageStore.length - 1]?.id + 1) || 0,
+				message: msg_txt,
+				emotion: {
+					assessment: 'positive',
+					positive: 0,
+					neutral:  0,
+					negative: 0,
+				},
+				date: getTime(),
+				is_active: true,
+			};
+
+			// end > analysing message
+			is_analysing = false;
+			addMessage(msg);
+
+		} else {
+			return;
+		}
+
+	}
+	//@ add > message to Store
+	const addMessage = ( msg ) => {
+
+		MessageStore.update(curMessages => {
+			return [...curMessages, msg];
+		});
+
+		setActiveMessage( $MessageStore , msg.id );
+
+	}
+	//@ set > current active message
+	const setActiveMessage = ( messages , id ) => {
+		for(let msg of messages) {
+			if( msg.id != id ) {
+				msg.is_active = false;
+			}
+		}
+	}
+	//@ get > current time (hh:mm)
+	const getTime = () => {
+		let d = new Date();
+		let h = d.getHours() < 10 ? ('0' + d.getHours()) : d.getHours();
+		let m = d.getMinutes() < 10 ? ('0' + d.getMinutes()) : d.getMinutes();
+
+		return `${h}:${m}`;
+	}
 
 
 </script>
@@ -30,15 +93,15 @@
 	<Header title="Введите сообщение" />
 
 	<!-- [ messages ] -->
-	<MessageContainer /> 
+	<MessageContainer messages={ $MessageStore } /> 
 
 	<!-- [ toolbar: send message ] -->
 	<Toolbar>
 		<form class = 'wide single-line'>
 			<!-- input: message -->
-			<Input placeholder="Введите сообщение ..." />
+			<Input on:TransmitMessage={ getMessage } placeholder="Введите сообщение ..." />
 			<!-- button: send -->
-			<button class="send">
+			<button on:click|preventDefault={ analyseMessage } class="send">
 				<Ico type="send" />
 			</button>
 		</form>

@@ -2,7 +2,6 @@
 <!-- [ SCRIPT ] -->
 <script>
 	// [ IMPORTS: extensions ]
-    import MessageStore from "../stores/MessageStore.js";
 
 
 	// [ IMPORTS: components ]
@@ -12,13 +11,7 @@
 
 
 	// [ PROPS ]
-	let messages = [];
-
-
-    // [ STORES ]
-	const unsub = MessageStore.subscribe(data => {
-		messages = data;
-	});
+	export let messages = [];
 
 
 </script>
@@ -26,8 +19,16 @@
 
 <!-- [ TEMPLATE: MessageContainer > Chat ] -->
 <div class = 'section-messages'>
+<div class="scroll-area">
 
+	{#each messages as message (message.id)}
+        <Message 
+            message={ message.message } 
+            emotion={ message.emotion } 
+            date={ message.date }  
+            isactive={ message.is_active ? 'active' : '' }
+        />
+    {/each}
 
-	<Message />
-
+</div>
 </div>

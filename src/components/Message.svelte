@@ -8,8 +8,11 @@
 
 	
 	// [ IMPORTS: props ]
+    export let message = 'message';
+    export let date = '00:00';
+    export let isactive = '';
 
-
+    
 	// [ PROPS ]
 	let emotion = 'positive';
 
@@ -19,14 +22,14 @@
 
 
 <!-- [ TEMPLATE: Message > MessageContainer ] -->
-<div class = 'message'>
-
-	<!-- <slot name="message"></slot>
-	<slot name="metadata"></slot> -->
+<div class = 'message { isactive }'>
     
+    <!-- message text -->
     <div class="message-text">
-        message text
+        { message }
     </div>
+    
+    <!-- meta data -->
 	<div class="metadata">
         <div class="indicator">
             {#if emotion == 'positive'}
@@ -37,7 +40,7 @@
                 <span class = 'emotion red'>отрицательное</span>
             {/if}
         </div>
-        <div class="date">22:00</div>
+        <div class="date">{ date }</div>
     </div>
 
 </div>
