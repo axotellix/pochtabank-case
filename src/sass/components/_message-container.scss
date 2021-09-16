@@ -1,0 +1,9 @@
+
+// [ MESSAGE CONTAINER ]
+.section-messages {
+    width: 100%; 
+    padding: var(--m-tiny);
+    flex-grow: 1;
+    
+    @include flex-align(flex-start, center, column);
+}

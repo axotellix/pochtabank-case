@@ -1,14 +1,23 @@
 
 <!-- [ SCRIPT ] -->
 <script>
+	// [ IMPORTS: extensions ]
+	import MessageStore from "../stores/MessageStore.js";
+
 	// [ IMPORTS: components ]
 	import Header from "./../components/Header.svelte";
+	import MessageContainer from "./../components/MessageContainer.svelte";
 	import Toolbar from "./../components/Toolbar.svelte";
 	import Input from "./../components/Input.svelte";
 	import Ico from "./../components/Ico.svelte";
 	
 	// [ IMPORTS: props ]
-	
+
+
+	// [ PROPS ]
+
+
+	// [ STORES ]
 
 
 </script>
@@ -21,6 +30,7 @@
 	<Header title="Введите сообщение" />
 
 	<!-- [ messages ] -->
+	<MessageContainer />
 
 	<!-- [ toolbar: send message ] -->
 	<Toolbar>
