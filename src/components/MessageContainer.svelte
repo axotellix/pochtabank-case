@@ -2,7 +2,6 @@
 <!-- [ SCRIPT ] -->
 <script>
 	// [ IMPORTS: extensions ]
-    import MessageStore from "../stores/MessageStore.js";
 
 
 	// [ IMPORTS: components ]
@@ -12,13 +11,7 @@
 
 
 	// [ PROPS ]
-	let messages = [];
-
-
-    // [ STORES ]
-	const unsub = MessageStore.subscribe(data => {
-		messages = data;
-	});
+	export let messages = [];
 
 
 </script>
@@ -28,6 +21,13 @@
 <div class = 'section-messages'>
 
 
-	<Message />
+	{#each messages as message}
+        <Message 
+            message={ message.message } 
+            emotion={ message.emotion } 
+            date={ message.date }  
+        />
+        { message.id + ": " + message.message }
+    {/each}
 
 </div>

@@ -1,11 +1,16 @@
 
 <!-- [ SCRIPT ] -->
 <script>
+	// [ IMPORTS: extenstions ]
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
+
+
 	// [ IMPORTS: components ]
     
 	
 	// [ IMPORTS: props ]
-	export let placeholder = 'введите текст ...';
+	export let placeholder = 'Введите текст ...';
 
 
     // [ PROPS ]
@@ -14,6 +19,7 @@
 
     // [ EVENTS ]
     $: togglePlaceholder( value );
+    $: dispatch('TransmitMessage', value);
 
 
     // [ METHODS ]
@@ -30,6 +36,6 @@
 
 <!-- [ TEMPLATE: Input > Chat ] -->
 <div class = 'input'>
-    <div contenteditable = 'true' bind:innerHTML={ value }></div>
+    <div contenteditable = 'true' bind:textContent={ value }></div>
     <p class="placeholder">{ placeholder }</p>
 </div>
