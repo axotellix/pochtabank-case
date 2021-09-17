@@ -8,10 +8,10 @@
 	// [ IMPORTS: props ]
 	let is_analysing = false;
 	let analyticsReceived = false;
-	let assessment = 'negative';
+	let assessment = 'positive';
 	let ratio = {
-        positive: 70,
-        neutral: 30,
+        positive: 0,
+        neutral:  0,
         negative: 0,
     };
 	let actions = [];

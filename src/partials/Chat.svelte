@@ -24,6 +24,7 @@
 	// [ EVENTS ]
 	$: dispatch('TransmitAnalysingState', is_analysing);
 
+	
 	// [ METHODS ]
 	//@ get > message entered in Input
 	const getMessage = ( e ) => {
@@ -32,27 +33,29 @@
 	//@ analyse > message
 	const analyseMessage = async ( m ) => { 
 
+		// check > if analysing recently sent message (or the chosen one)
 		let analysing_new = (typeof(m) === 'object') ? true : false;
 		
+		//? if > server currently available (no message being analysed)
 		if( !is_analysing ) {
 
-			// start > analysing message
+			// [ start > analysing message ]
 			is_analysing = true;
 
-			//? if > analysing message just sent (or the chosen one)
+			 // keep > emotion codes
 			const emotions = {
 				pos: 'positive',
 				neg: 'negative',
 			}
+
+			 // prepare > text to analyse
 			const text = analysing_new ? msg_txt : m;
 			
-			// send > request
+			 // send > request
 			let req = await fetch(`http://reworr.pythonanywhere.com/api/${text}`);
 			let res = await req.json();
 
-
-			// process > results
-
+			 // process > results
 			const pos = emotions[res.tonal] == 'positive' ? Math.floor((res.score * 100)) : 0;
 			const neg = emotions[res.tonal] == 'negative' ? Math.floor((res.score * 100)) : 0;
 			const neu = 100 - pos - neg;
@@ -63,26 +66,26 @@
 				negative: neg,
 			}
 
-
-			// create > new message
+			 // create > new message
 			let msg = {
 				id: ($MessageStore[$MessageStore.length - 1]?.id + 1) || 0,
 				message: text,
 				emotion: {
 					assessment: results.assessment,
-					positive: results.positive,
-					neutral:  results.neutral,
-					negative: results.negative,
+					positive: 	results.positive,
+					neutral:  	results.neutral,
+					negative: 	results.negative,
 				},
 				date: getTime(),
 				is_active: true,
 			};
 
-			console.log(msg);
 
-			// end > analysing message
+			// [ end > analysing message ]
 			is_analysing = false;
+			 // send > analysing result (to render analytics in Dashboard) 
 			dispatch('TransmitAnalytics', msg);
+			 // render > new message
 			if( analysing_new ) {
 				addMessage(msg);
 			}
@@ -106,14 +109,17 @@
 	const setMsg = ( e ) => {
 		let message = '';
 		const id = e.detail;
+
 		for(let msg of $MessageStore) {
 			if( msg.id != id ) {
 				msg.is_active = false;
 			} else {
 				message = msg.message;
+				msg.is_active = true;
 			}
-			msg.is_active = false;
 		}
+
+		$MessageStore = $MessageStore;
 		analyseMessage( message );
 	}
 	//@ set > current active message
@@ -146,7 +152,7 @@
 	<!-- [ messages ] -->
 	<MessageContainer 
 		on:SetMsg = { setMsg }
-		messages={ $MessageStore } 
+		messages = { $MessageStore } 
 	/> 
 
 	<!-- [ toolbar: send message ] -->
