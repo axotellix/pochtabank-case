@@ -2,6 +2,8 @@
 <!-- [ SCRIPT ] -->
 <script>
 	// [ IMPORTS: extensions ]
+	import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
 	import MessageStore from "../stores/MessageStore.js";
 
 	// [ IMPORTS: components ]
@@ -25,12 +27,18 @@
 		msg_txt = e.detail;
 	} 
 	//@ analyse > message
-	const analyseMessage = () => {
+	const analyseMessage = ( m ) => { 
+
+		let analysing_new = (typeof(m) === 'object') ? true : false;
 		
 		if( !is_analysing ) {
 
 			// start > analysing message
 			is_analysing = true;
+
+			//? if > analysing message just sent (or the chosen one)
+			//if( _msg != '' )
+			//console.log(m);
 
 			// create > new message
 			let msg = {
@@ -48,7 +56,10 @@
 
 			// end > analysing message
 			is_analysing = false;
-			addMessage(msg);
+			dispatch('TransmitAnalytics', msg);
+			if( analysing_new ) {
+				addMessage(msg);
+			}
 
 		} else {
 			return;
@@ -64,6 +75,20 @@
 
 		setActiveMessage( $MessageStore , msg.id );
 
+	}
+	//@ set > current active message
+	const setMsg = ( e ) => {
+		let message = '';
+		const id = e.detail;
+		for(let msg of $MessageStore) {
+			if( msg.id != id ) {
+				msg.is_active = false;
+			} else {
+				message = msg.message;
+			}
+			msg.is_active = false;
+		}
+		analyseMessage( message );
 	}
 	//@ set > current active message
 	const setActiveMessage = ( messages , id ) => {
@@ -93,7 +118,10 @@
 	<Header title="Введите сообщение" />
 
 	<!-- [ messages ] -->
-	<MessageContainer messages={ $MessageStore } /> 
+	<MessageContainer 
+		on:SetMsg = { setMsg }
+		messages={ $MessageStore } 
+	/> 
 
 	<!-- [ toolbar: send message ] -->
 	<Toolbar>
