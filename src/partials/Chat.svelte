@@ -18,13 +18,14 @@
 
 	// [ PROPS ]
 	let is_analysing = false;
-	let msg_txt  = '';
+	let msg_txt  	 = '';
+	let clearInput   = false;
 
 
 	// [ EVENTS ]
 	$: dispatch('TransmitAnalysingState', is_analysing);
 
-	
+
 	// [ METHODS ]
 	//@ get > message entered in Input
 	const getMessage = ( e ) => {
@@ -32,6 +33,9 @@
 	} 
 	//@ analyse > message
 	const analyseMessage = async ( m ) => { 
+
+		// clear > Input
+		clearInput = true; 
 
 		// check > if analysing recently sent message (or the chosen one)
 		let analysing_new = (typeof(m) === 'object') ? true : false;
@@ -130,6 +134,10 @@
 			}
 		}
 	}
+	//@ reset > clear input property (back to false)
+	const resetClearInput = () => {
+		clearInput = false;
+	} 
 	//@ get > current time (hh:mm)
 	const getTime = () => {
 		let d = new Date();
@@ -159,7 +167,12 @@
 	<Toolbar>
 		<form class = 'wide single-line'>
 			<!-- input: message -->
-			<Input on:TransmitMessage={ getMessage } placeholder="Введите сообщение ..." />
+			<Input 
+				on:TransmitMessage={ getMessage } 
+				on:TransmitClearInput={ resetClearInput } 
+				{ clearInput } 
+				placeholder="Введите сообщение ..."
+			/>
 			<!-- button: send -->
 			<button on:click|preventDefault={ analyseMessage } class="send">
 				<Ico type="send" />

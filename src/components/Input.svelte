@@ -11,6 +11,9 @@
 	
 	// [ IMPORTS: props ]
 	export let placeholder = 'Введите текст ...';
+	export let clearInput  = false;
+
+    $: dispatch('TransmitClearInput', clearInput);
 
 
     // [ PROPS ]
@@ -18,6 +21,7 @@
 
 
     // [ EVENTS ]
+    $: if( clearInput ) value = '';
     $: togglePlaceholder( value );
     $: dispatch('TransmitMessage', value);
 
