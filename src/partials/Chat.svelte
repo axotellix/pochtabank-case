@@ -21,13 +21,16 @@
 	let msg_txt  = '';
 
 
+	// [ EVENTS ]
+	$: dispatch('TransmitAnalysingState', is_analysing);
+
 	// [ METHODS ]
 	//@ get > message entered in Input
 	const getMessage = ( e ) => {
 		msg_txt = e.detail;
 	} 
 	//@ analyse > message
-	const analyseMessage = ( m ) => { 
+	const analyseMessage = async ( m ) => { 
 
 		let analysing_new = (typeof(m) === 'object') ? true : false;
 		
@@ -37,22 +40,45 @@
 			is_analysing = true;
 
 			//? if > analysing message just sent (or the chosen one)
-			//if( _msg != '' )
-			//console.log(m);
+			const emotions = {
+				pos: 'positive',
+				neg: 'negative',
+			}
+			const text = analysing_new ? msg_txt : m;
+			
+			// send > request
+			let req = await fetch(`http://reworr.pythonanywhere.com/api/${text}`);
+			let res = await req.json();
+
+
+			// process > results
+
+			const pos = emotions[res.tonal] == 'positive' ? Math.floor((res.score * 100)) : 0;
+			const neg = emotions[res.tonal] == 'negative' ? Math.floor((res.score * 100)) : 0;
+			const neu = 100 - pos - neg;
+			const results = {
+				assessment: emotions[res.tonal],
+				positive: pos,
+				neutral:  neu,
+				negative: neg,
+			}
+
 
 			// create > new message
 			let msg = {
 				id: ($MessageStore[$MessageStore.length - 1]?.id + 1) || 0,
-				message: msg_txt,
+				message: text,
 				emotion: {
-					assessment: 'positive',
-					positive: 0,
-					neutral:  0,
-					negative: 0,
+					assessment: results.assessment,
+					positive: results.positive,
+					neutral:  results.neutral,
+					negative: results.negative,
 				},
 				date: getTime(),
 				is_active: true,
 			};
+
+			console.log(msg);
 
 			// end > analysing message
 			is_analysing = false;

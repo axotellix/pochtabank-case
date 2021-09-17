@@ -6,6 +6,7 @@
 	import Dashboard from "./partials/Dashboard.svelte";
 	
 	// [ IMPORTS: props ]
+	let is_analysing = false;
 	let analyticsReceived = false;
 	let assessment = 'negative';
 	let ratio = {
@@ -13,10 +14,14 @@
         neutral: 30,
         negative: 0,
     };
-	let actions = ['action 1', 'action 2', 'action 3', 'action 4'];
+	let actions = [];
 
 
 	// [ METHODS ]
+	//@ get > message analytics
+	const getAnalysingState = ( e ) => {
+		is_analysing = e.detail;
+	}
 	//@ get > message analytics
 	const getAnalytics = ( e ) => {
 
@@ -25,9 +30,9 @@
 
 		// store > all actions
 		const action_book = {
-			positive: ['positive action 1', 'positive action 2'],
+			positive: ['поприветствовать, задать вопрос', 'попрощаться, поблагодарить', 'попросить оценить', 'поблагодарить за оценку', 'предложить задать еще вопрос'],
 			neutral:  ['neutral action 1', 'neutral action 2'],
-			negative: ['negative action 1', 'negative action 2'],
+			negative: ['быстрый ответ', 'похожие формулировки', 'вызов оператора', 'извиниться', 'заготовленный ответ', 'уточняющий вопрос'],
 		};
 
 		// get > data
@@ -49,10 +54,14 @@
 <main>
 
 	<!-- [ section: chat ] -->
-	<Chat on:TransmitAnalytics={ getAnalytics } />
+	<Chat 
+		on:TransmitAnalytics={ getAnalytics } 
+		on:TransmitAnalysingState={ getAnalysingState } 
+	/>
 	
 	<!-- [ section: dashboard ] -->
 	<Dashboard 
+		{ is_analysing }
 		{ analyticsReceived }
 		{ assessment }
 		{ ratio }

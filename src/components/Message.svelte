@@ -11,10 +11,11 @@
     export let message = 'message';
     export let date = '00:00';
     export let isactive = '';
+    export let emotion = 'positive';
 
     
 	// [ PROPS ]
-	let emotion = 'positive';
+	
 
 
 

@@ -6,6 +6,7 @@
 	import Analytics from "./../components/Analytics.svelte";
 	
 	// [ IMPORTS: props ]
+	export let is_analysing = false;
 	export let analyticsReceived = false;
 	export let assessment = 'positive';
 	export let ratio = {
@@ -32,6 +33,11 @@
 			{ ratio }
 			{ actions }
 		/>
+	{/if}
+	{#if is_analysing}
+		<div class="system-message">
+			<p class="msg-text">wait ...</p>
+		</div>
 	{/if}
 
 

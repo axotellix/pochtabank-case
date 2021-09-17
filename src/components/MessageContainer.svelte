@@ -26,7 +26,7 @@
     <div on:click={ () => { dispatch('SetMsg', message.id) } }>
         <Message 
             message={ message.message } 
-            emotion={ message.emotion } 
+            emotion={ message.emotion.assessment } 
             date={ message.date }  
             isactive={ message.is_active ? 'active' : '' }
         />
